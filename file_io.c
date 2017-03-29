@@ -23,7 +23,7 @@ int main() {
 		return -1;
 	}
 
-	/* current offset, showing file starts with offset 0. */
+	/* read out the current offset, showing file starts with offset 0. */
         int offset = lseek(fd1, 0, SEEK_CUR);	
 	printf("file current offset %d\n", offset);
 
@@ -40,6 +40,7 @@ int main() {
         offset = lseek(fd1, 0, SEEK_CUR);	
 	printf("file current offset %d\n", offset);
 
+	/* SEEK_SET counts from the beginning of file */
         offset = lseek(fd1, 100, SEEK_SET);	
 	printf("file current offset %d\n", offset);
 
@@ -52,19 +53,23 @@ int main() {
 		printf("file written bytes %d\n", n2);
 	}
 	
+	/* Read out the current */
         offset = lseek(fd1, 0, SEEK_CUR);	
 	printf("file current offset %d\n", offset);
 
-        /* Get to the start */
+        /* Go back to the start */
         offset = lseek(fd1, 0, SEEK_SET);	
 	printf("file current offset %d\n", offset);
 
+	/* read out the first data chunk */
 	if (read(fd1, read_data, 10) > 0) {
 		printf("file data read: %s\n", read_data);
 	}
 
+	/* do not care about return value */
         (void)lseek(fd1, 100, SEEK_SET);	
 
+	/* read out the second data chunk */
 	if (read(fd1, read_data, 10) > 0) {
 		printf("file data read: %s\n", read_data);
 	}
