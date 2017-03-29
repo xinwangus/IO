@@ -11,6 +11,8 @@ char data2[] = "abcdefg"; /* c string has \0 ending */
 
 char file1[] = "./test";
 
+char read_data[100] = {'\0'};
+
 int main() {
 	int n1, n2;
 
@@ -38,7 +40,7 @@ int main() {
         offset = lseek(fd1, 0, SEEK_CUR);	
 	printf("file current offset %d\n", offset);
 
-        offset = lseek(fd1, 100, SEEK_CUR);	
+        offset = lseek(fd1, 100, SEEK_SET);	
 	printf("file current offset %d\n", offset);
 
 	/* write */
@@ -53,6 +55,19 @@ int main() {
         offset = lseek(fd1, 0, SEEK_CUR);	
 	printf("file current offset %d\n", offset);
 
+        /* Get to the start */
+        offset = lseek(fd1, 0, SEEK_SET);	
+	printf("file current offset %d\n", offset);
+
+	if (read(fd1, read_data, 10) > 0) {
+		printf("file data read: %s\n", read_data);
+	}
+
+        (void)lseek(fd1, 100, SEEK_SET);	
+
+	if (read(fd1, read_data, 10) > 0) {
+		printf("file data read: %s\n", read_data);
+	}
 	/* no need to call close() */
 }
 
